@@ -6,9 +6,10 @@ import com.github.simple_mocks.localization_service.api.rq.LocalizeRq;
 import com.github.simple_mocks.localization_service.api.service.LocalizationService;
 import com.github.simplemocks.hub.api.dto.WebApplicationPLDto;
 import com.github.simplemocks.hub.api.rq.SearchByTagsPLRq;
+import com.github.simplemocks.hub.api.rs.GetConfigurationsPLRs;
 import com.github.simplemocks.hub.api.rs.SearchByTagsPLRs;
+import com.github.simplemocks.hub.service.WebApplicationServiceImpl;
 import com.github.simplemocks.webapp.api.rq.SearchByTagsRq;
-import com.github.simplemocks.webapp.api.service.WebApplicationService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -17,6 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.Locale;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 /**
  * @author sibmaks
@@ -26,8 +28,19 @@ import java.util.Optional;
 @RequiredArgsConstructor
 @RequestMapping("/api/web/app/hub/")
 public class WebApplicationController {
-    private final WebApplicationService webApplicationService;
+    private final WebApplicationServiceImpl webApplicationService;
     private final LocalizationService localizationService;
+
+    @GetMapping("v1/configuration/")
+    public GetConfigurationsPLRs getConfigurations() {
+        var configMap = webApplicationService.getAll()
+                .stream()
+                .collect(Collectors.toMap(it -> it.getCode(), it -> it.getFrontendUrl()));
+
+        return GetConfigurationsPLRs.builder()
+                .configs(configMap)
+                .build();
+    }
 
     @GetMapping("v1/applications/")
     public SearchByTagsPLRs searchByTags(@RequestBody SearchByTagsPLRq rq) {

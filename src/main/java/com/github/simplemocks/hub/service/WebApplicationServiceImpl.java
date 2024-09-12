@@ -8,6 +8,7 @@ import com.github.simplemocks.webapp.api.service.WebApplicationService;
 import jakarta.annotation.Nonnull;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Function;
@@ -57,5 +58,9 @@ public class WebApplicationServiceImpl implements WebApplicationService {
             }
         }
         return true;
+    }
+
+    public List<WebApplication> getAll() {
+        return new ArrayList<>(webApplications.values());
     }
 }
