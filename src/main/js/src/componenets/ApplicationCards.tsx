@@ -24,12 +24,14 @@ const ApplicationCards: React.FC = () => {
           <div className="col-md-4" key={key}>
             <div className="card mb-4">
               <div className="card-header">
-                <h5 className="card-title">{value.title}</h5>
+                <h5 className="card-title">{value.title || value.code}</h5>
               </div>
               <div className="card-body">
                 <p className="card-text">{value.description}</p>
+              </div>
+              <div className="card-footer">
                 <a href={`/apps/${key}`} className="btn btn-primary" target="_blank" rel="noopener noreferrer">
-                  Open Application
+                  Open
                 </a>
               </div>
             </div>
