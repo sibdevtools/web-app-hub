@@ -1,17 +1,24 @@
 import React from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'hugeicons-react'
-import Sidebar from './componenets/Sidebar';
+
 import { ApplicationProvider } from './contexts/ApplicationContext';
-import { AppDisplay } from './AppDisplay';
+import { ApplicationDisplay } from './componenets/ApplicationDisplay';
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import ApplicationLayout from './componenets/ApplicationLayout';
+import ApplicationCards from './componenets/ApplicationCards';
 
 const App = () => {
   return (
     <ApplicationProvider>
-      <main className="d-flex flex-nowrap">
-        <Sidebar />
-        <AppDisplay />
-      </main>
+      <BrowserRouter>
+        <Routes>
+          <Route path="/" element={<ApplicationLayout />}>
+            <Route index element={<ApplicationCards />} />
+            <Route path="apps/*" element={<ApplicationDisplay />} />
+          </Route>
+        </Routes>
+      </BrowserRouter>
     </ApplicationProvider>
   );
 };

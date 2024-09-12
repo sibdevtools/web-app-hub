@@ -1,7 +1,7 @@
 import React from 'react';
-import { useApplicationContext } from './contexts/ApplicationContext';
+import { useApplicationContext } from '../contexts/ApplicationContext';
 
-export const AppDisplay: React.FC = () => {
+export const ApplicationDisplay: React.FC = () => {
   const { configuration, loading, error } = useApplicationContext();
 
   if (loading) {
