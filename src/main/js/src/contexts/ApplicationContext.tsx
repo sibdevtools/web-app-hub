@@ -1,9 +1,18 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
 import axios from 'axios';
 
+type WebApplicationType = {
+  code: string,
+  frontendUrl: string,
+  icon: string,
+  title: string,
+  description: string,
+  healthStatus: string,
+};
+
 type GetConfigurationRsType = {
   configs: {
-    [key: string]: string;
+    [key: string]: WebApplicationType;
   }
 };
 

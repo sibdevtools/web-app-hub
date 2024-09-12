@@ -9,6 +9,7 @@ import com.github.simplemocks.hub.api.rq.SearchByTagsPLRq;
 import com.github.simplemocks.hub.api.rs.GetConfigurationsPLRs;
 import com.github.simplemocks.hub.api.rs.SearchByTagsPLRs;
 import com.github.simplemocks.hub.service.WebApplicationServiceImpl;
+import com.github.simplemocks.webapp.api.dto.WebApplication;
 import com.github.simplemocks.webapp.api.rq.SearchByTagsRq;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -33,9 +34,22 @@ public class WebApplicationController {
 
     @GetMapping("v1/configuration/")
     public GetConfigurationsPLRs getConfigurations() {
+        var userLocale = Locale.ENGLISH;
+
         var configMap = webApplicationService.getAll()
                 .stream()
-                .collect(Collectors.toMap(it -> it.getCode(), it -> it.getFrontendUrl()));
+                .collect(Collectors.toMap(
+                                WebApplication::getCode,
+                                it -> WebApplicationPLDto.builder()
+                                        .code(it.getCode())
+                                        .frontendUrl(it.getFrontendUrl())
+                                        .icon(getLocalization(it.getIconCode(), userLocale))
+                                        .title(getLocalization(it.getTitleCode(), userLocale))
+                                        .description(getLocalization(it.getDescriptionCode(), userLocale))
+                                        .healthStatus(it.getHealthStatus())
+                                        .build()
+                        )
+                );
 
         return GetConfigurationsPLRs.builder()
                 .configs(configMap)
@@ -56,9 +70,11 @@ public class WebApplicationController {
                 .stream()
                 .map(it -> WebApplicationPLDto.builder()
                         .code(it.getCode())
+                        .frontendUrl(it.getFrontendUrl())
                         .icon(getLocalization(it.getIconCode(), userLocale))
                         .title(getLocalization(it.getTitleCode(), userLocale))
                         .description(getLocalization(it.getDescriptionCode(), userLocale))
+                        .healthStatus(it.getHealthStatus())
                         .build())
                 .toList();
 

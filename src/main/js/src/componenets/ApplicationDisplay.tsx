@@ -21,15 +21,16 @@ export const ApplicationDisplay: React.FC = () => {
   let iframeSrc: string | null = null;
   for (const [key, value] of Object.entries(configuration.configs)) {
     const prefix = `/apps/${key}`;
+    const frontendUrl = value.frontendUrl;
     if (currentPath === prefix) {
-      iframeSrc = value;
+      iframeSrc = frontendUrl;
       break;
     } else if (currentPath.startsWith(`${prefix}/`)) {
       const suffix = currentPath.substring(prefix.length + 1);
-      if (value.endsWith('/')) {
-        iframeSrc = value + suffix;
+      if (frontendUrl.endsWith('/')) {
+        iframeSrc = frontendUrl + suffix;
       } else {
-        iframeSrc = `${value}/${suffix}`;
+        iframeSrc = `${frontendUrl}/${suffix}`;
       }
       break;
     }

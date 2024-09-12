@@ -1,5 +1,6 @@
 package com.github.simplemocks.hub.api.rs;
 
+import com.github.simplemocks.hub.api.dto.WebApplicationPLDto;
 import lombok.*;
 
 import java.util.Map;
@@ -14,5 +15,5 @@ import java.util.Map;
 @NoArgsConstructor
 @AllArgsConstructor
 public class GetConfigurationsPLRs {
-    private Map<String, String> configs;
+    private Map<String, WebApplicationPLDto> configs;
 }
