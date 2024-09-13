@@ -11,18 +11,18 @@ const Sidebar = () => {
         <Home01Icon color={'white'} />
       </a>
       <hr />
-      <ul className="nav nav-pills flex-column mb-auto">
-        <li className="nav-item">
-          <a href="#" className="nav-link active text-center" aria-current="page">
-            <More03Icon />
-          </a>
-        </li>
-        <li>
-          <a href="#" className="nav-link text-white text-center">
-            <More03Icon />
-          </a>
-        </li>
-      </ul>
+      {/*<ul className="nav nav-pills flex-column mb-auto">*/}
+      {/*  <li className="nav-item">*/}
+      {/*    <a href="#" className="nav-link active text-center" aria-current="page">*/}
+      {/*      <More03Icon />*/}
+      {/*    </a>*/}
+      {/*  </li>*/}
+      {/*  <li>*/}
+      {/*    <a href="#" className="nav-link text-white text-center">*/}
+      {/*      <More03Icon />*/}
+      {/*    </a>*/}
+      {/*  </li>*/}
+      {/*</ul>*/}
     </div>
   );
 };

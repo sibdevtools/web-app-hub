@@ -18,6 +18,20 @@ const ApplicationCards: React.FC = () => {
     return <div>No applications available.</div>;
   }
 
+  const getStyleForHealth = (healthStatus: string) => {
+    if (healthStatus === 'UP') {
+      return 'bg-success border-light'
+    }
+    if (healthStatus === 'WAITING') {
+      return 'bg-warning border-light'
+    }
+    if (healthStatus === 'DOWN') {
+      return 'bg-danger border-light'
+    }
+
+    return 'bg-secondary border-light'
+  };
+
   return (
     <div className="container mt-4">
       <div className="row">
@@ -25,7 +39,13 @@ const ApplicationCards: React.FC = () => {
           <div className="col-md-4" key={key}>
             <div className="card mb-4">
               <div className="card-header">
-                <h5 className="card-title">{value.title || value.code}</h5>
+                <h5 className="card-title">
+                  <div
+                    className={`position-absolute top-0 start-100 translate-middle p-2 border badge rounded-pill ${getStyleForHealth(value.healthStatus)}`}>
+                    <span>{value.healthStatus}</span>
+                  </div>
+                  {value.title || value.code}
+                </h5>
               </div>
               <div className="card-body">
                 <p className="card-text">{value.description}</p>
