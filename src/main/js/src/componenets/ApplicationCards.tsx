@@ -1,5 +1,6 @@
 import React from 'react';
 import { useApplicationContext } from '../contexts/ApplicationContext';
+import { LogoutSquare01Icon } from 'hugeicons-react';
 
 const ApplicationCards: React.FC = () => {
   const { configuration, loading, error } = useApplicationContext();
@@ -30,8 +31,8 @@ const ApplicationCards: React.FC = () => {
                 <p className="card-text">{value.description}</p>
               </div>
               <div className="card-footer">
-                <a href={`/apps/${key}`} className="btn btn-primary" target="_blank" rel="noopener noreferrer">
-                  Open
+                <a href={`/apps/${key}`} className="btn btn-primary float-end">
+                  <LogoutSquare01Icon />
                 </a>
               </div>
             </div>
