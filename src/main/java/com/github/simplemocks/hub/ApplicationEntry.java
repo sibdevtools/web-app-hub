@@ -9,25 +9,13 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
  * @author sibmaks
  * @since 0.0.1
  */
-@EnableJpaRepositories(
-        basePackages = {
-                "com.github.simple_mocks",
-                "com.github.simplemocks"
-        }
-)
-@EntityScan(
-        basePackages = {
-                "com.github.simple_mocks",
-                "com.github.simplemocks"
-        }
-)
-@SpringBootApplication(
-        scanBasePackages = {
-                "com.github.simplemocks.hub.config",
-                "com.github.simplemocks",
-                "com.github.simple_mocks",
-        }
-)
+
+@EnableJpaRepositories(basePackages = "com.github.simplemocks")
+@EntityScan(basePackages = "com.github.simplemocks")
+@SpringBootApplication(scanBasePackages = {
+        "com.github.simplemocks.hub.config",
+        "com.github.simplemocks"
+})
 public class ApplicationEntry {
     public static void main(String[] args) {
         SpringApplication.run(ApplicationEntry.class, args);

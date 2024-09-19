@@ -1,14 +1,15 @@
 package com.github.simplemocks.hub.controller;
 
-import com.github.simple_mocks.localization_service.api.dto.LocalizationId;
-import com.github.simple_mocks.localization_service.api.dto.LocalizedText;
-import com.github.simple_mocks.localization_service.api.rq.LocalizeRq;
-import com.github.simple_mocks.localization_service.api.service.LocalizationService;
+import com.github.simplemocks.common.api.rs.StandardBodyRs;
 import com.github.simplemocks.hub.api.dto.WebApplicationPLDto;
 import com.github.simplemocks.hub.api.rq.SearchByTagsPLRq;
 import com.github.simplemocks.hub.api.rs.GetConfigurationsPLRs;
 import com.github.simplemocks.hub.api.rs.SearchByTagsPLRs;
 import com.github.simplemocks.hub.service.WebApplicationServiceImpl;
+import com.github.simplemocks.localization_service.api.dto.LocalizationId;
+import com.github.simplemocks.localization_service.api.dto.LocalizedText;
+import com.github.simplemocks.localization_service.api.rq.LocalizeRq;
+import com.github.simplemocks.localization_service.api.service.LocalizationService;
 import com.github.simplemocks.webapp.api.dto.WebApplication;
 import com.github.simplemocks.webapp.api.rq.SearchByTagsRq;
 import lombok.RequiredArgsConstructor;
@@ -67,6 +68,7 @@ public class WebApplicationController {
                                 .pageSize(rq.getPageSize())
                                 .build()
                 )
+                .getBody()
                 .stream()
                 .map(it -> WebApplicationPLDto.builder()
                         .code(it.getCode())
@@ -85,10 +87,10 @@ public class WebApplicationController {
 
     private String getLocalization(LocalizationId localizationId,
                                    Locale locale) {
-        return Optional.ofNullable(localizationService.localize(
-                                new LocalizeRq(localizationId, locale)
-                        )
-                )
+        var rq = new LocalizeRq(localizationId, locale);
+        var rs = localizationService.localize(rq);
+        return Optional.of(rs)
+                .map(StandardBodyRs::getBody)
                 .map(LocalizedText::getMessage)
                 .orElse(null);
     }

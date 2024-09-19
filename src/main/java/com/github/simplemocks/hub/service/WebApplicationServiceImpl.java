@@ -4,6 +4,8 @@ import com.github.simplemocks.hub.exception.ApplicationNotFoundException;
 import com.github.simplemocks.webapp.api.dto.WebApplication;
 import com.github.simplemocks.webapp.api.rq.GetApplicationRq;
 import com.github.simplemocks.webapp.api.rq.SearchByTagsRq;
+import com.github.simplemocks.webapp.api.rs.GetWebApplicationRs;
+import com.github.simplemocks.webapp.api.rs.SearchWebApplicationsRs;
 import com.github.simplemocks.webapp.api.service.WebApplicationService;
 import jakarta.annotation.Nonnull;
 import org.springframework.stereotype.Service;
@@ -29,25 +31,26 @@ public class WebApplicationServiceImpl implements WebApplicationService {
 
     @Nonnull
     @Override
-    public WebApplication getByCode(@Nonnull GetApplicationRq rq) {
+    public GetWebApplicationRs getByCode(@Nonnull GetApplicationRq rq) {
         var code = rq.code();
         var webApplication = webApplications.get(code);
         if (webApplication == null) {
             throw new ApplicationNotFoundException("Application not found");
         }
-        return webApplication;
+        return new GetWebApplicationRs(webApplication);
     }
 
     @Nonnull
     @Override
-    public List<WebApplication> searchByTags(@Nonnull SearchByTagsRq rq) {
+    public SearchWebApplicationsRs searchByTags(@Nonnull SearchByTagsRq rq) {
         var tags = rq.tags();
         var pageSize = rq.pageSize();
-        return webApplications.values().stream()
+        var applications = webApplications.values().stream()
                 .filter(it -> isFitTags(it, tags))
                 .limit(pageSize)
                 .skip((rq.page() - 1L) * pageSize)
                 .toList();
+        return new SearchWebApplicationsRs(new ArrayList<>(applications));
     }
 
     private boolean isFitTags(WebApplication webApplication, List<String> tags) {
