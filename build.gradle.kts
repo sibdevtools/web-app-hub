@@ -133,8 +133,8 @@ tasks.jar {
 
 publishing {
     publications {
-        create<MavenPublication>("mavenJava") {
-            from(components["java"])
+        create<MavenPublication>("bootJava") {
+            artifact(tasks.named("bootJar"))
             pom {
                 packaging = "jar"
                 url = "https://github.com/simple-mocks/web-app-hub"
