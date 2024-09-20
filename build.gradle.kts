@@ -70,6 +70,7 @@ dependencies {
 
     implementation("com.github.simple-mocks.web.app:web-app-base64:${project.property("lib_web_app_base64_version")}")
     implementation("com.github.simple-mocks.web.app:web-app-jolt:${project.property("lib_web_app_jolt_version")}")
+    implementation("com.github.simple-mocks.web.app:web-app-mocks:${project.property("lib_web_app_mocks_version")}")
 
     testImplementation("org.springframework.boot:spring-boot-starter-test")
 
