@@ -10,7 +10,10 @@ plugins {
     id("io.spring.dependency-management") version "1.1.6"
 }
 
-version = "${project.property("version")}"
+val versionFromProperty = "${project.property("version")}"
+val versionFromEnv: String? = System.getenv("VERSION")
+
+version = versionFromEnv ?: versionFromProperty
 group = "${project.property("group")}"
 
 val targetJavaVersion = (project.property("jdk_version") as String).toInt()
@@ -113,7 +116,22 @@ tasks.jacocoTestReport {
     dependsOn(tasks.test)
 }
 
+tasks.register<Copy>("copyFrontendResources") {
+    group = "build"
+    description = "Copies the frontend build resources to the Spring Boot static directory"
+
+    dependsOn(":web-app-frontend:buildFrontend")
+
+    from(project(":web-app-frontend").file("build/out"))
+    into(layout.buildDirectory.dir("resources/main/web/app/hub/static"))
+}
+
+tasks.named("processResources") {
+    dependsOn("copyFrontendResources")
+}
+
 tasks.jar {
+    dependsOn("copyFrontendResources")
     from("LICENSE") {
         rename { "${it}_${project.property("project_name")}" }
     }

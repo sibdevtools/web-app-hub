@@ -21,6 +21,12 @@ jobs:
           path: ~/.gradle/caches
           key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle') }}
           restore-keys: ${{ runner.os }}-gradle
+      - name: Extract Version Number
+        run: |
+          echo "Extracting version from tag..."
+          VERSION=${GITHUB_REF##*/}
+          VERSION=${VERSION#v}
+          echo "VERSION=$VERSION" >> $GITHUB_ENV
       - name: Make gradlew executable
         run: chmod +x gradlew
       - name: Validate Gradle wrapper

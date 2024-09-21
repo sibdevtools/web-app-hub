@@ -1,5 +1,6 @@
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const CopyWebpackPlugin = require('copy-webpack-plugin');
 
 module.exports = {
   mode: 'development',
@@ -22,23 +23,28 @@ module.exports = {
   },
   output: {
     filename: 'bundle.js',
-    path: path.resolve(__dirname, '../resources/web/app/hub/static'),
+    publicPath: '/',
+    path: path.resolve(__dirname, 'build/out'),
   },
   devServer: {
     static: {
-      directory: path.join(__dirname, '../resources/web/app/hub/static'), // Serve from 'dist' directory
+      directory: path.join(__dirname, 'build/out'),
     },
-    open: true, // Automatically open the browser
-    port: 3000, // You can choose any port
+    open: true,
+    port: 3000,
   },
   plugins: [
     new HtmlWebpackPlugin({
       template: './src/index.html',
-      base: '/',
       minify: {
         removeComments: true,
         collapseWhitespace: true,
       },
+    }),
+    new CopyWebpackPlugin({
+      patterns: [
+        { from: 'res' }
+      ]
     }),
   ],
 };
