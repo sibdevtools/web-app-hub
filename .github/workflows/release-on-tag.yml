@@ -33,11 +33,11 @@ jobs:
           name: Release ${{ env.VERSION }}
           prerelease: false
           token: ${{ secrets.GITHUB_TOKEN }}
-      - name: Trigger publish workflow
+      - name: Trigger release event
         run: |
           curl -X POST \
-          -H "Accept: application/vnd.github+json" \
-          -H "Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}" \
-          https://api.github.com/repos/${{ github.repository }}/actions/workflows/publish.yml/dispatches \
-          -d '{"ref":"${{ github.ref_name }}"}'
+          -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
+          -H "Accept: application/vnd.github.v3+json" \
+          https://api.github.com/repos/${{ github.repository }}/releases \
+          -d '{"tag_name": "${{ github.ref_name }}", "name": "Release ${{ github.ref_name }}", "body": "Release ${{ github.ref_name }}", "draft": false, "prerelease": false}'
           
