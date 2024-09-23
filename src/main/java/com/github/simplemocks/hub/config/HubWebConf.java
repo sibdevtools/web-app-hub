@@ -1,5 +1,8 @@
 package com.github.simplemocks.hub.config;
 
+import com.github.simplemocks.hub.logger.ApiLoggerFilter;
+import org.springframework.boot.web.servlet.FilterRegistrationBean;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
@@ -28,5 +31,16 @@ public class HubWebConf implements WebMvcConfigurer {
                 .setViewName("forward:/index.html");
         registry.addViewController("/apps/**")
                 .setViewName("forward:/index.html");
+    }
+
+    @Bean
+    public FilterRegistrationBean<ApiLoggerFilter> apiLoggingFilter() {
+        var registrationBean = new FilterRegistrationBean<ApiLoggerFilter>();
+
+        registrationBean.setFilter(new ApiLoggerFilter());
+        registrationBean.addUrlPatterns("/*");
+        registrationBean.setOrder(Integer.MIN_VALUE);
+
+        return registrationBean;
     }
 }
