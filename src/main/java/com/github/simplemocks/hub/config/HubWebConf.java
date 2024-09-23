@@ -39,7 +39,7 @@ public class HubWebConf implements WebMvcConfigurer {
 
         registrationBean.setFilter(new ApiLoggerFilter());
         registrationBean.addUrlPatterns("/*");
-        registrationBean.setOrder(2);
+        registrationBean.setOrder(Integer.MIN_VALUE);
 
         return registrationBean;
     }
