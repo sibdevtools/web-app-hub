@@ -15,8 +15,7 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
         with:
-          fetch-depth: 0
-          tags: true
+          fetch-tags: true
       - name: Extract Version Number
         run: |
           echo "Extracting version from tag..."
