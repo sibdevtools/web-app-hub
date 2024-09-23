@@ -42,4 +42,4 @@ jobs:
       - name: Store distribution packages
         uses: softprops/action-gh-release@v2
         with:
-          files: build/libs/
+          files: build/libs/*.jar
