@@ -1,4 +1,4 @@
-package com.github.simplemocks.hub;
+package com.github.sibdevtools.hub;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -10,11 +10,11 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
  * @since 0.0.1
  */
 
-@EnableJpaRepositories(basePackages = "com.github.simplemocks")
-@EntityScan(basePackages = "com.github.simplemocks")
+@EnableJpaRepositories(basePackages = "com.github.sibdevtools")
+@EntityScan(basePackages = "com.github.sibdevtools")
 @SpringBootApplication(scanBasePackages = {
-        "com.github.simplemocks.hub.config",
-        "com.github.simplemocks"
+        "com.github.sibdevtools.hub.config",
+        "com.github.sibdevtools"
 })
 public class ApplicationEntry {
     public static void main(String[] args) {

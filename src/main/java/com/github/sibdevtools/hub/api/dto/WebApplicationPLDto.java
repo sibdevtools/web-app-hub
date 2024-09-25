@@ -1,6 +1,6 @@
-package com.github.simplemocks.hub.api.dto;
+package com.github.sibdevtools.hub.api.dto;
 
-import com.github.simplemocks.webapp.api.dto.HealthStatus;
+import com.github.sibdevtools.webapp.api.dto.HealthStatus;
 import lombok.*;
 
 /**

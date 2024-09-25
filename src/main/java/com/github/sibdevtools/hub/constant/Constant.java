@@ -1,6 +1,6 @@
-package com.github.simplemocks.hub.constant;
+package com.github.sibdevtools.hub.constant;
 
-import com.github.simplemocks.error_service.api.dto.ErrorSourceId;
+import com.github.sibdevtools.error.api.dto.ErrorSourceId;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 

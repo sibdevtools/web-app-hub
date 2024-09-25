@@ -1,12 +1,12 @@
-package com.github.simplemocks.hub.service;
+package com.github.sibdevtools.hub.service;
 
-import com.github.simplemocks.hub.exception.ApplicationNotFoundException;
-import com.github.simplemocks.webapp.api.dto.WebApplication;
-import com.github.simplemocks.webapp.api.rq.GetApplicationRq;
-import com.github.simplemocks.webapp.api.rq.SearchByTagsRq;
-import com.github.simplemocks.webapp.api.rs.GetWebApplicationRs;
-import com.github.simplemocks.webapp.api.rs.SearchWebApplicationsRs;
-import com.github.simplemocks.webapp.api.service.WebApplicationService;
+import com.github.sibdevtools.hub.exception.ApplicationNotFoundException;
+import com.github.sibdevtools.webapp.api.dto.WebApplication;
+import com.github.sibdevtools.webapp.api.rq.GetApplicationRq;
+import com.github.sibdevtools.webapp.api.rq.SearchByTagsRq;
+import com.github.sibdevtools.webapp.api.rs.GetWebApplicationRs;
+import com.github.sibdevtools.webapp.api.rs.SearchWebApplicationsRs;
+import com.github.sibdevtools.webapp.api.service.WebApplicationService;
 import jakarta.annotation.Nonnull;
 import org.springframework.stereotype.Service;
 
