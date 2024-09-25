@@ -1,7 +1,7 @@
-package com.github.simplemocks.hub.exception;
+package com.github.sibdevtools.hub.exception;
 
-import com.github.simplemocks.error_service.exception.ServiceException;
-import com.github.simplemocks.hub.constant.Constant;
+import com.github.sibdevtools.error.exception.ServiceException;
+import com.github.sibdevtools.hub.constant.Constant;
 import jakarta.annotation.Nonnull;
 
 /**

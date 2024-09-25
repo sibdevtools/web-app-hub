@@ -1,6 +1,6 @@
-package com.github.simplemocks.hub.api.rs;
+package com.github.sibdevtools.hub.api.rs;
 
-import com.github.simplemocks.hub.api.dto.WebApplicationPLDto;
+import com.github.sibdevtools.hub.api.dto.WebApplicationPLDto;
 import lombok.*;
 
 import java.util.List;

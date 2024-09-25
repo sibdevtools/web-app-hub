@@ -1,4 +1,4 @@
-package com.github.simplemocks.hub.api.rq;
+package com.github.sibdevtools.hub.api.rq;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

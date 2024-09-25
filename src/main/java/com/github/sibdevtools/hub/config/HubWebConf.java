@@ -1,6 +1,6 @@
-package com.github.simplemocks.hub.config;
+package com.github.sibdevtools.hub.config;
 
-import com.github.simplemocks.hub.logger.ApiLoggerFilter;
+import com.github.sibdevtools.hub.logger.ApiLoggerFilter;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

@@ -1,4 +1,4 @@
-package com.github.simplemocks.hub.logger;
+package com.github.sibdevtools.hub.logger;
 
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
