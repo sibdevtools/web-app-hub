@@ -10,7 +10,6 @@ import com.github.sibdevtools.localization.api.dto.LocalizationId;
 import com.github.sibdevtools.localization.api.dto.LocalizedText;
 import com.github.sibdevtools.localization.api.rq.LocalizeRq;
 import com.github.sibdevtools.localization.api.service.LocalizationService;
-import com.github.sibdevtools.webapp.api.dto.WebApplication;
 import com.github.sibdevtools.webapp.api.rq.SearchByTagsRq;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -20,6 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.Locale;
 import java.util.Optional;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 
 /**
@@ -39,16 +39,17 @@ public class WebApplicationController {
 
         var configMap = webApplicationService.getAll()
                 .stream()
+                .map(it -> WebApplicationPLDto.builder()
+                        .code(it.getCode())
+                        .frontendUrl(it.getFrontendUrl())
+                        .icon(getLocalization(it.getIconCode(), userLocale))
+                        .title(getLocalization(it.getTitleCode(), userLocale))
+                        .description(getLocalization(it.getDescriptionCode(), userLocale))
+                        .healthStatus(it.getHealthStatus())
+                        .build())
                 .collect(Collectors.toMap(
-                                WebApplication::getCode,
-                                it -> WebApplicationPLDto.builder()
-                                        .code(it.getCode())
-                                        .frontendUrl(it.getFrontendUrl())
-                                        .icon(getLocalization(it.getIconCode(), userLocale))
-                                        .title(getLocalization(it.getTitleCode(), userLocale))
-                                        .description(getLocalization(it.getDescriptionCode(), userLocale))
-                                        .healthStatus(it.getHealthStatus())
-                                        .build()
+                                WebApplicationPLDto::getCode,
+                                Function.identity()
                         )
                 );
 

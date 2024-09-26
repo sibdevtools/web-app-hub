@@ -1,6 +1,6 @@
 import React from 'react';
 import './sidebar.css'
-import { Home01Icon, More03Icon } from 'hugeicons-react';
+import { Home01Icon, More03Icon, Settings01Icon } from 'hugeicons-react';
 
 const Sidebar = () => {
   return (
@@ -11,18 +11,13 @@ const Sidebar = () => {
         <Home01Icon color={'white'} />
       </a>
       <hr />
-      {/*<ul className="nav nav-pills flex-column mb-auto">*/}
-      {/*  <li className="nav-item">*/}
-      {/*    <a href="#" className="nav-link active text-center" aria-current="page">*/}
-      {/*      <More03Icon />*/}
-      {/*    </a>*/}
-      {/*  </li>*/}
-      {/*  <li>*/}
-      {/*    <a href="#" className="nav-link text-white text-center">*/}
-      {/*      <More03Icon />*/}
-      {/*    </a>*/}
-      {/*  </li>*/}
-      {/*</ul>*/}
+      <ul className="nav nav-pills flex-column mb-auto">
+        <li className="nav-item">
+          <a href="/apps/web.app.settings" className="nav-link text-center" aria-current="page">
+            <Settings01Icon color={'white'} />
+          </a>
+        </li>
+      </ul>
     </div>
   );
 };

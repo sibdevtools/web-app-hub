@@ -63,6 +63,11 @@ public class WebApplicationServiceImpl implements WebApplicationService {
         return true;
     }
 
+    /**
+     * Get all applications
+     *
+     * @return all web applications
+     */
     public List<WebApplication> getAll() {
         return new ArrayList<>(webApplications.values());
     }
