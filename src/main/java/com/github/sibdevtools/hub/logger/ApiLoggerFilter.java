@@ -1,5 +1,11 @@
 package com.github.sibdevtools.hub.logger;
 
+import com.fasterxml.jackson.databind.DeserializationFeature;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.json.JsonMapper;
+import com.fasterxml.jackson.datatype.jdk8.Jdk8Module;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
+import com.fasterxml.jackson.module.paramnames.ParameterNamesModule;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpFilter;
@@ -12,8 +18,7 @@ import org.springframework.web.util.ContentCachingResponseWrapper;
 
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
-import java.util.Set;
-import java.util.UUID;
+import java.util.*;
 
 /**
  * @author sibmaks
@@ -30,6 +35,17 @@ public class ApiLoggerFilter extends HttpFilter {
             MediaType.APPLICATION_XML
     );
 
+    private final ObjectMapper objectMapper;
+
+    public ApiLoggerFilter() {
+        this.objectMapper = JsonMapper.builder()
+                .disable(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES)
+                .addModule(new ParameterNamesModule())
+                .addModule(new Jdk8Module())
+                .addModule(new JavaTimeModule())
+                .build();
+    }
+
     @Override
     public void doFilter(HttpServletRequest request, HttpServletResponse response, FilterChain chain)
             throws IOException, ServletException {
@@ -45,72 +61,69 @@ public class ApiLoggerFilter extends HttpFilter {
             chain.doFilter(requestWrapper, responseWrapper);
         } finally {
             var timing = System.currentTimeMillis() - startTime;
-            var status = responseWrapper.getStatus();
-            var rqHeaders = getHeaders(requestWrapper);
-            var rqType = requestWrapper.getContentType();
-            var rqBody = getRqBody(requestWrapper);
-            var rsType = responseWrapper.getContentType();
-            var rsBody = getRsBody(responseWrapper);
+            var httpLogEntry = HttpLogEntry.builder()
+                    .direction(RequestDirection.IN)
+                    .rqUID(rqUID)
+                    .method(method)
+                    .uri(requestURI)
+                    .timing(timing)
+                    .status(responseWrapper.getStatus())
+                    .rqHeaders(getHeaders(requestWrapper))
+                    .rq(getRqBody(requestWrapper))
+                    .rsHeaders(getHeaders(responseWrapper))
+                    .rs(getRsBody(responseWrapper))
+                    .build();
             responseWrapper.copyBodyToResponse();
-            log.info("""
-                            [INCOMING]
-                            RqUID: '{}'
-                            Method: '{}'
-                            Uri: '{}'
-                            Timing: '{} ms'
-                            Status: '{}'
-                            Rq-Headers: '{}'
-                            Rq-Content-Type: '{}'
-                            Rq: '{}'
-                            Rs-Content-Type: '{}'
-                            Rs: '{}'""",
-                    rqUID,
-                    method,
-                    requestURI,
-                    timing,
-                    status,
-                    rqHeaders,
-                    rqType,
-                    rqBody,
-                    rsType,
-                    rsBody
-            );
+            log.info("{}", objectMapper.writeValueAsString(httpLogEntry));
         }
     }
 
-    private String getHeaders(ContentCachingRequestWrapper requestWrapper) {
-        var headers = new StringBuilder();
-        var headerNames = requestWrapper.getHeaderNames();
+    private Map<String, List<String>> getHeaders(ContentCachingResponseWrapper rs) {
+        var headers = new HashMap<String, List<String>>();
+        var headerNames = rs.getHeaderNames();
+        for (var header : headerNames) {
+            headers.put(header, getHeaderValues(rs, header));
+        }
+        return headers;
+    }
+
+    private List<String> getHeaderValues(ContentCachingResponseWrapper rs, String headerName) {
+        return Optional.of(rs.getHeaders(headerName))
+                .map(ArrayList::new)
+                .orElseGet(ArrayList::new);
+    }
+
+    private Map<String, List<String>> getHeaders(ContentCachingRequestWrapper rq) {
+        var headers = new HashMap<String, List<String>>();
+        var headerNames = rq.getHeaderNames();
+        if (headerNames == null) {
+            return Collections.emptyMap();
+        }
         while (headerNames.hasMoreElements()) {
             var header = headerNames.nextElement();
-            headers.append(header)
-                    .append("=\"")
-                    .append(getHeaderValue(requestWrapper, header))
-                    .append('"');
-            if (headerNames.hasMoreElements()) {
-                headers.append('\n');
-            }
+            headers.put(header, getHeaderValues(rq, header));
         }
-        return headers.toString();
+        return headers;
     }
 
-    private String getHeaderValue(ContentCachingRequestWrapper request, String headerName) {
-        var headerValues = request.getHeaders(headerName);
-        var headerValue = new StringBuilder();
-        while (headerValues.hasMoreElements()) {
-            var value = headerValues.nextElement();
-            headerValue.append(value);
-            if (headerValues.hasMoreElements()) {
-                headerValue.append(',');
-            }
+    private List<String> getHeaderValues(ContentCachingRequestWrapper rq, String headerName) {
+        var enumeration = rq.getHeaders(headerName);
+        var values = new ArrayList<String>();
+        while (enumeration.hasMoreElements()) {
+            var value = enumeration.nextElement();
+            values.add(value);
         }
-        return headerValue.toString();
+        return values;
     }
 
     private String getRqBody(ContentCachingRequestWrapper request) {
         var contentType = request.getContentType();
         if (contentType == null || isNotPrintableContentType(contentType)) {
-            return "%d bytes".formatted(request.getContentLength());
+            var contentLength = request.getContentLength();
+            if (contentLength < 0) {
+                return null;
+            }
+            return "%d bytes".formatted(contentLength);
         }
         try {
             var inputStream = request.getInputStream();
@@ -128,7 +141,11 @@ public class ApiLoggerFilter extends HttpFilter {
     private String getRsBody(ContentCachingResponseWrapper response) {
         var contentType = response.getContentType();
         if (contentType == null || isNotPrintableContentType(contentType)) {
-            return "%d bytes".formatted(response.getContentSize());
+            var contentLength = response.getContentSize();
+            if (contentLength < 0) {
+                return null;
+            }
+            return "%d bytes".formatted(contentLength);
         }
         try {
             var inputStream = response.getContentInputStream();
