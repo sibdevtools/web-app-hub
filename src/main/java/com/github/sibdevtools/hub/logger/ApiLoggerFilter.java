@@ -50,17 +50,17 @@ public class ApiLoggerFilter extends HttpFilter {
     public void doFilter(HttpServletRequest request, HttpServletResponse response, FilterChain chain)
             throws IOException, ServletException {
         var rqUID = UUID.randomUUID().toString();
-        var method = request.getMethod();
-        var requestURI = request.getRequestURI();
 
-        var requestWrapper = new ContentCachingRequestWrapper(request);
-        var responseWrapper = new ContentCachingResponseWrapper(response);
+        var requestWrapper = getRqWrapper(request);
+        var responseWrapper = getRsWrapper(request, response);
 
         var startTime = System.currentTimeMillis();
         try {
             chain.doFilter(requestWrapper, responseWrapper);
         } finally {
             var timing = System.currentTimeMillis() - startTime;
+            var method = request.getMethod();
+            var requestURI = request.getRequestURI();
             var httpLogEntry = HttpLogEntry.builder()
                     .direction(RequestDirection.IN)
                     .rqUID(rqUID)
@@ -78,7 +78,30 @@ public class ApiLoggerFilter extends HttpFilter {
         }
     }
 
-    private Map<String, List<String>> getHeaders(ContentCachingResponseWrapper rs) {
+    private static ContentCachingResponseWrapper getRsWrapper(
+            HttpServletRequest request,
+            HttpServletResponse response
+    ) {
+        ContentCachingResponseWrapper responseWrapper;
+        if (request instanceof ContentCachingResponseWrapper contentCachingResponseWrapper) {
+            responseWrapper = contentCachingResponseWrapper;
+        } else {
+            responseWrapper = new ContentCachingResponseWrapper(response);
+        }
+        return responseWrapper;
+    }
+
+    private static ContentCachingRequestWrapper getRqWrapper(HttpServletRequest request) {
+        ContentCachingRequestWrapper requestWrapper;
+        if (request instanceof ContentCachingRequestWrapper contentCachingRequestWrapper) {
+            requestWrapper = contentCachingRequestWrapper;
+        } else {
+            requestWrapper = new ContentCachingRequestWrapper(request);
+        }
+        return requestWrapper;
+    }
+
+    private Map<String, List<String>> getHeaders(HttpServletResponse rs) {
         var headers = new HashMap<String, List<String>>();
         var headerNames = rs.getHeaderNames();
         for (var header : headerNames) {
@@ -87,13 +110,13 @@ public class ApiLoggerFilter extends HttpFilter {
         return headers;
     }
 
-    private List<String> getHeaderValues(ContentCachingResponseWrapper rs, String headerName) {
+    private List<String> getHeaderValues(HttpServletResponse rs, String headerName) {
         return Optional.of(rs.getHeaders(headerName))
                 .map(ArrayList::new)
                 .orElseGet(ArrayList::new);
     }
 
-    private Map<String, List<String>> getHeaders(ContentCachingRequestWrapper rq) {
+    private Map<String, List<String>> getHeaders(HttpServletRequest rq) {
         var headers = new HashMap<String, List<String>>();
         var headerNames = rq.getHeaderNames();
         if (headerNames == null) {
@@ -106,7 +129,7 @@ public class ApiLoggerFilter extends HttpFilter {
         return headers;
     }
 
-    private List<String> getHeaderValues(ContentCachingRequestWrapper rq, String headerName) {
+    private List<String> getHeaderValues(HttpServletRequest rq, String headerName) {
         var enumeration = rq.getHeaders(headerName);
         var values = new ArrayList<String>();
         while (enumeration.hasMoreElements()) {
