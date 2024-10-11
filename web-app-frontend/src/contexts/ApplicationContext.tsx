@@ -1,19 +1,19 @@
-import React, { createContext, useContext, useState, useEffect } from 'react';
+import React, { createContext, useContext, useState, useEffect, useMemo } from 'react';
 import axios from 'axios';
 
 type WebApplicationType = {
-  code: string,
-  frontendUrl: string,
-  icon: string,
-  title: string,
-  description: string,
-  healthStatus: string,
+  code: string;
+  frontendUrl: string;
+  icon: string;
+  title: string;
+  description: string;
+  healthStatus: string;
 };
 
 type GetConfigurationRsType = {
   configs: {
     [key: string]: WebApplicationType;
-  }
+  };
 };
 
 interface ApplicationContextType {
@@ -37,23 +37,28 @@ export const ApplicationProvider: React.FC<{ children: React.ReactNode }> = ({ c
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
 
-  useEffect(() => {
-    const fetchConfigurations = async () => {
-      try {
-        const response = await axios.get<GetConfigurationRsType>('/api/web/app/hub/v1/configuration/');
-        setRs(response.data);
-      } catch (err) {
-        setError('Failed to fetch data');
-      } finally {
-        setLoading(false);
-      }
-    };
+  const fetchConfigurations = async () => {
+    try {
+      const response = await axios.get<GetConfigurationRsType>('/api/web/app/hub/v1/configuration/');
+      setRs(response.data);
+    } catch (err) {
+      setError('Failed to fetch data');
+    } finally {
+      setLoading(false);
+    }
+  };
 
+  useEffect(() => {
     fetchConfigurations();
   }, []);
 
+  const providerValue = useMemo(
+    () => ({ configuration: rs, loading, error }),
+    [rs, loading, error]
+  );
+
   return (
-    <ApplicationContext.Provider value={{ configuration: rs, loading, error }}>
+    <ApplicationContext.Provider value={providerValue}>
       {children}
     </ApplicationContext.Provider>
   );

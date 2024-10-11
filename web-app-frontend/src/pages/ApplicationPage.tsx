@@ -1,19 +1,21 @@
 import React from 'react';
 import { useApplicationContext } from '../contexts/ApplicationContext';
+import { Loader } from '../components/Loader';
+import { Alert } from 'react-bootstrap';
 
-export const ApplicationDisplay: React.FC = () => {
+export const ApplicationPage: React.FC = () => {
   const { configuration, loading, error } = useApplicationContext();
 
   if (loading) {
-    return <div>Loading iframe...</div>;
+    return <Loader />;
   }
 
   if (error) {
-    return <div>Error: {error}</div>;
+    return <Alert variant="danger">{error}</Alert>;
   }
 
   if (!configuration) {
-    return <div>No configs available</div>;
+    return <Alert variant="danger">No configs available</Alert>;
   }
 
   const currentPath = window.location.pathname;
@@ -37,15 +39,12 @@ export const ApplicationDisplay: React.FC = () => {
   }
 
   if (!iframeSrc) {
-    return <div>No matching configuration found for the current URL</div>;
+    return <Alert variant="danger">No matching configuration found for the current URL</Alert>;
   }
 
   return (
     <iframe src={`${iframeSrc}${window.location.search}`}
-            style={{
-              height: '100vh',
-              width: '100%',
-            }}
+            className={'w-100 vh-100'}
             title="Application display"
     />
   );
