@@ -7,6 +7,7 @@ Web applications hub - provide access for applications in one place.
 * [JOLT Transformer](https://github.com/sibdevtools/web-app-jolt) - provide JOLT sandbox
 * [Base64](https://github.com/sibdevtools/web-app-base64) - base64 encoder/decoder
 * [Mocks](https://github.com/sibdevtools/web-app-mocks) - http mocks server
+* [Settings](https://github.com/sibdevtools/web-app-settings) - ui settings
 
 ## To build
 
