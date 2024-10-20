@@ -7,61 +7,66 @@ export const ApplicationPage: React.FC = () => {
   const { configuration, loading, error } = useApplicationContext();
   const iframeRef = useRef<HTMLIFrameElement>(null);
   const [iframeSrc, setIframeSrc] = useState<string | null>(null);
+  const [iframePrefix, setIframePrefix] = useState<string | null>(null);
   const [appPrefix, setAppPrefix] = useState<string | null>(null);
 
   useEffect(() => {
     if (!configuration) return;
 
     const currentPath = window.location.pathname;
-    let matchedSrc: string | null = null;
-    let matchedPrefix: string | null = null;
 
     for (const [key, value] of Object.entries(configuration.configs)) {
       const prefix = `/apps/${key}`;
       const frontendUrl = value.frontendUrl;
 
       if (currentPath === prefix) {
-        matchedSrc = frontendUrl;
-        matchedPrefix = prefix;
+        setIframePrefix(frontendUrl);
+        setIframeSrc(frontendUrl + window.location.search);
+        setAppPrefix(prefix);
         break;
       } else if (currentPath.startsWith(`${prefix}/`)) {
         const suffix = currentPath.substring(prefix.length + 1);
-        matchedSrc = frontendUrl.endsWith('/')
+        const matchedSrc = frontendUrl.endsWith('/')
           ? frontendUrl + suffix
           : `${frontendUrl}/${suffix}`;
-        matchedPrefix = prefix;
+        setIframePrefix(frontendUrl);
+        setIframeSrc(matchedSrc + window.location.search);
+        setAppPrefix(prefix);
         break;
       }
-    }
-
-    if (matchedSrc && matchedPrefix) {
-      setIframeSrc(matchedSrc + window.location.search);
-      setAppPrefix(matchedPrefix);
     }
   }, [configuration]);
 
   useEffect(() => {
     const iframe = iframeRef.current;
-    if (!iframe || !appPrefix || !iframeSrc) return;
+    if (!iframe || !appPrefix || !iframeSrc || !iframePrefix) return;
 
     const handleIframeNavigation = () => {
-      try {
-        const iframeWindow = iframe.contentWindow;
-        if (!iframeWindow) return;
-
-        const iframeUrl = new URL(iframeWindow.location.href);
-        const iframePath = iframeUrl.pathname;
-
-        const mappedPath = iframePath.replace(iframeSrc, '');
-
-        const newUrl = `${appPrefix}${mappedPath}${iframeUrl.search}`;
-
-        if (window.location.pathname + window.location.search !== newUrl) {
-          history.pushState(null, '', newUrl);
-        }
-      } catch (error) {
-        console.warn('Unable to access iframe URL due to cross-origin restrictions', error);
+      const iframeDocument = iframe.contentDocument || iframe?.contentWindow?.document;
+      if (!iframeDocument) {
+        return;
       }
+
+      const observer = new MutationObserver(function (mutationsList) {
+        const documentURI = iframeDocument.documentURI;
+        const parts = documentURI.split(iframePrefix)
+        if (parts.length !== 2) {
+          return
+        }
+        const path = `${appPrefix}/${parts[parts.length - 1]}`
+        if (window.location.pathname + window.location.search !== path) {
+          history.pushState(null, '', path);
+        }
+      });
+
+      const config = {
+        childList: true,
+        attributes: true,
+        subtree: true,
+        characterData: true
+      };
+
+      observer.observe(iframeDocument.body, config);
     };
 
     iframe.addEventListener('load', handleIframeNavigation);
