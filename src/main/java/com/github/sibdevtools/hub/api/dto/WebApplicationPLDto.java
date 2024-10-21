@@ -19,4 +19,5 @@ public class WebApplicationPLDto {
     private String title;
     private String description;
     private HealthStatus healthStatus;
+    private String version;
 }

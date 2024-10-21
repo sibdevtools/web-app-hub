@@ -46,6 +46,7 @@ public class WebApplicationController {
                         .title(getLocalization(it.getTitleCode(), userLocale))
                         .description(getLocalization(it.getDescriptionCode(), userLocale))
                         .healthStatus(it.getHealthStatus())
+                        .version(it.getVersion())
                         .build())
                 .collect(Collectors.toMap(
                                 WebApplicationPLDto::getCode,
@@ -78,6 +79,7 @@ public class WebApplicationController {
                         .title(getLocalization(it.getTitleCode(), userLocale))
                         .description(getLocalization(it.getDescriptionCode(), userLocale))
                         .healthStatus(it.getHealthStatus())
+                        .version(it.getVersion())
                         .build())
                 .toList();
 

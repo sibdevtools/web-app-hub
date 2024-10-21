@@ -66,6 +66,7 @@ export const ApplicationsPage: React.FC = () => {
                 <CardText>{value.description}</CardText>
               </CardBody>
               <CardFooter>
+                <span className="text-secondary">${value.version}</span>
                 <Button href={`/apps/${key}`} variant={'primary'} className="float-end">
                   <LogoutSquare01Icon />
                 </Button>

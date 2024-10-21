@@ -8,6 +8,7 @@ type WebApplicationType = {
   title: string;
   description: string;
   healthStatus: string;
+  version: string;
 };
 
 type GetConfigurationRsType = {
