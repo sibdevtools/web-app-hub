@@ -20,8 +20,22 @@ chmod +x gradlew
 
 ## To start
 
-Run shell command
+Required at least `JDK 21`
+
+### From sources
+
+```shell
+ ./gradlew bootRun
+```
+
+### Compiled Jar
 
 ```shell
 java -jar web-app-hub-*.jar
+```
+
+### Released distributive
+
+```shell
+./bin/web-app-hub
 ```
