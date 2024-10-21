@@ -2,7 +2,6 @@ import java.text.SimpleDateFormat
 import java.util.*
 
 plugins {
-    id("maven-publish")
     id("java")
     id("jacoco")
     id("application")
@@ -147,57 +146,5 @@ tasks.jar {
                 "Built-On-Java" to "${System.getProperty("java.vm.version")} (${System.getProperty("java.vm.vendor")})"
             )
         )
-    }
-}
-
-publishing {
-    publications {
-        create<MavenPublication>("bootJava") {
-            artifact(tasks.named("bootJar"))
-            pom {
-                packaging = "jar"
-                url = "https://github.com/sibdevtools/web-app-hub"
-
-                licenses {
-                    license {
-                        name.set("The MIT License (MIT)")
-                        url.set("https://www.mit.edu/~amini/LICENSE.md")
-                    }
-                }
-
-                scm {
-                    connection.set("scm:https://github.com/sibdevtools/web-app-hub.git")
-                    developerConnection.set("scm:git:ssh://github.com/sibdevtools")
-                    url.set("https://github.com/sibdevtools/web-app-hub")
-                }
-
-                developers {
-                    developer {
-                        id.set("sibmaks")
-                        name.set("Maksim Drobyshev")
-                        email.set("sibmaks@vk.com")
-                    }
-                }
-            }
-        }
-    }
-    repositories {
-        maven {
-            val releasesUrl = uri("https://nexus.sibmaks.ru/repository/maven-releases/")
-            val snapshotsUrl = uri("https://nexus.sibmaks.ru/repository/maven-snapshots/")
-            url = if (version.toString().endsWith("SNAPSHOT")) snapshotsUrl else releasesUrl
-            credentials {
-                username = project.findProperty("nexus_username")?.toString() ?: System.getenv("NEXUS_USERNAME")
-                password = project.findProperty("nexus_password")?.toString() ?: System.getenv("NEXUS_PASSWORD")
-            }
-        }
-        maven {
-            name = "GitHubPackages"
-            url = uri("https://maven.pkg.github.com/sibdevtools/web-app-hub")
-            credentials {
-                username = project.findProperty("gpr.user")?.toString() ?: System.getenv("GITHUB_ACTOR")
-                password = project.findProperty("gpr.key")?.toString() ?: System.getenv("GITHUB_TOKEN")
-            }
-        }
     }
 }
