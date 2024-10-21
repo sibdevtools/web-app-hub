@@ -51,25 +51,27 @@ export const ApplicationsPage: React.FC = () => {
         {Object.entries(configs).map(([key, value]) => (
           <Col md={4} key={key}>
             <Card className="mb-4">
-              <CardHeader>
-                <CardTitle>
+              <Card.Header>
+                <Card.Title>
                   <Badge
                     pill
                     bg={getStyleForHealth(value.healthStatus)}
                     className={`position-absolute top-0 start-100 translate-middle p-2 border`}>
                     <span>{value.healthStatus}</span>
                   </Badge>
-                  {value.title || value.code}
-                </CardTitle>
-              </CardHeader>
-              <CardBody>
+                  <a href={`/apps/${key}`}>
+                    {value.title || value.code}
+                  </a>
+                </Card.Title>
+              </Card.Header>
+              <Card.Body>
                 <CardText>{value.description}</CardText>
-              </CardBody>
-              <CardFooter>
-                <Button href={`/apps/${key}`} variant={'primary'} className="float-end">
-                  <LogoutSquare01Icon />
-                </Button>
-              </CardFooter>
+              </Card.Body>
+              {value.version && (
+                <Card.Footer>
+                  <small className={'text-muted'}>Version: {value.version}</small>
+                </Card.Footer>
+              )}
             </Card>
           </Col>
         ))}
