@@ -1,15 +1,11 @@
 import React from 'react';
-import { useApplicationContext } from '../contexts/ApplicationContext';
-import { LogoutSquare01Icon } from 'hugeicons-react';
+import { useApplicationContext, WebApplicationType } from '../contexts/ApplicationContext';
 import { Loader } from '../components/Loader';
 import {
-  Alert, Badge, Button,
+  Alert,
+  Badge,
   Card,
-  CardBody,
-  CardFooter,
-  CardHeader,
   CardText,
-  CardTitle,
   Col,
   Container,
   Row
@@ -32,6 +28,12 @@ export const ApplicationsPage: React.FC = () => {
     return <Alert variant="info">No applications available.</Alert>;
   }
 
+  const codeComparator = (a: [string, WebApplicationType], b: [string, WebApplicationType]) => {
+    return a[0].localeCompare(b[0], undefined, { sensitivity: 'base' });
+  }
+
+  const sortedConfigs = Object.entries(configs).sort(codeComparator);
+
   const getStyleForHealth = (healthStatus: string): Variant => {
     if (healthStatus === 'UP') {
       return 'success'
@@ -48,7 +50,7 @@ export const ApplicationsPage: React.FC = () => {
   return (
     <Container className="mt-4">
       <Row>
-        {Object.entries(configs).map(([key, value]) => (
+        {sortedConfigs.map(([key, value]) => (
           <Col md={4} key={key}>
             <Card className="mb-4">
               <Card.Header>
