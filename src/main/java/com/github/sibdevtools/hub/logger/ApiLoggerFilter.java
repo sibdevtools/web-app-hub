@@ -34,6 +34,7 @@ public class ApiLoggerFilter extends HttpFilter {
             MediaType.APPLICATION_JSON,
             MediaType.APPLICATION_XML
     );
+    private static final long MAX_BODY_SIZE = 1024;
 
     private final ObjectMapper objectMapper;
 
@@ -141,8 +142,8 @@ public class ApiLoggerFilter extends HttpFilter {
 
     private String getRqBody(ContentCachingRequestWrapper request) {
         var contentType = request.getContentType();
-        if (contentType == null || isNotPrintableContentType(contentType)) {
-            var contentLength = request.getContentLength();
+        var contentLength = request.getContentLength();
+        if (contentType == null || isNotPrintableContentType(contentType) || contentLength > MAX_BODY_SIZE) {
             if (contentLength < 0) {
                 return null;
             }
@@ -163,8 +164,8 @@ public class ApiLoggerFilter extends HttpFilter {
 
     private String getRsBody(ContentCachingResponseWrapper response) {
         var contentType = response.getContentType();
-        if (contentType == null || isNotPrintableContentType(contentType)) {
-            var contentLength = response.getContentSize();
+        var contentLength = response.getContentSize();
+        if (contentType == null || isNotPrintableContentType(contentType) || contentLength > MAX_BODY_SIZE) {
             if (contentLength < 0) {
                 return null;
             }

@@ -73,6 +73,7 @@ dependencies {
     implementation("com.github.sibdevtools.web.app:web-app-base64:${project.property("lib_web_app_base64_version")}")
     implementation("com.github.sibdevtools.web.app:web-app-jolt:${project.property("lib_web_app_jolt_version")}")
     implementation("com.github.sibdevtools.web.app:web-app-mocks:${project.property("lib_web_app_mocks_version")}")
+    implementation("com.github.sibdevtools.web.app:web-app-bytes2png:${project.property("lib_web_app_bytes2png_version")}")
     implementation("com.github.sibdevtools.web.app:web-app-settings:${project.property("lib_web_app_settings_version")}")
 
     testImplementation("org.springframework.boot:spring-boot-starter-test")
