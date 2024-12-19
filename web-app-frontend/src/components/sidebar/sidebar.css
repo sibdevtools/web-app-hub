@@ -19,3 +19,8 @@ main {
   min-width: 96px;
   min-height: 100vh;
 }
+
+.sidebar .nav-link:hover {
+  background-color: #495057;
+  color: #ffffff;
+}
