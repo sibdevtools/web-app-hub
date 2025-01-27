@@ -1,0 +1,94 @@
+[versions]
+spring-framework = "3.3.3"
+spring-dependency-managment = "1.1.6"
+
+
+# service APIs deps
+common-api = "0.0.2"
+
+content-api = "0.0.7"
+content-embedded = "0.0.11"
+
+localization-api = "0.0.7"
+localization-embedded = "0.0.8"
+
+error-api = "0.0.16"
+error-embedded = "0.0.14"
+
+session-api = "0.0.15"
+session-embedded = "0.0.10"
+
+storage-api = "0.0.13"
+storage-embedded = "0.1.16"
+
+async-api = "0.0.6"
+async-embedded = "0.0.9"
+
+web-app-api = "0.0.6"
+
+# service web apps
+web-app-base64 = "0.0.10"
+web-app-jolt = "0.0.10"
+web-app-mocks = "0.0.17"
+web-app-bytes2png = "0.0.3"
+web-app-settings = "0.0.2"
+
+[libraries]
+common-api = { module = "com.github.sibdevtools:api-common", version.ref = "common-api" }
+
+content-api = { module = "com.github.sibdevtools:api-content", version.ref = "content-api" }
+content-embedded = { module = "com.github.sibdevtools:service-content-embedded", version.ref = "content-embedded" }
+
+localization-api = { module = "com.github.sibdevtools:api-localization", version.ref = "localization-api" }
+localization-embedded = { module = "com.github.sibdevtools:service-localization-embedded", version.ref = "localization-embedded" }
+
+error-api = { module = "com.github.sibdevtools:api-error", version.ref = "error-api" }
+error-embedded = { module = "com.github.sibdevtools:service-error-embedded", version.ref = "error-embedded" }
+
+session-api = { module = "com.github.sibdevtools:api-session", version.ref = "session-api" }
+session-embedded = { module = "com.github.sibdevtools:service-session-embedded", version.ref = "session-embedded" }
+
+storage-api = { module = "com.github.sibdevtools:api-storage", version.ref = "storage-api" }
+storage-embedded = { module = "com.github.sibdevtools:service-storage-embedded", version.ref = "storage-embedded" }
+
+async-api = { module = "com.github.sibdevtools:api-async", version.ref = "async-api" }
+async-embedded = { module = "com.github.sibdevtools:service-async-embedded", version.ref = "async-embedded" }
+
+web-app-api = { module = "com.github.sibdevtools:api-web-app", version.ref = "web-app-api" }
+
+web-app-base64 = { module = "com.github.sibdevtools.web.app:web-app-base64", version.ref = "web-app-base64" }
+web-app-jolt = { module = "com.github.sibdevtools.web.app:web-app-jolt", version.ref = "web-app-jolt" }
+web-app-mocks = { module = "com.github.sibdevtools.web.app:web-app-mocks", version.ref = "web-app-mocks" }
+web-app-bytes2png = { module = "com.github.sibdevtools.web.app:web-app-bytes2png", version.ref = "web-app-bytes2png" }
+web-app-settings = { module = "com.github.sibdevtools.web.app:web-app-settings", version.ref = "web-app-settings" }
+
+[bundles]
+service-api = [
+    "common-api",
+    "content-api",
+    "localization-api",
+    "error-api",
+    "session-api",
+    "storage-api",
+    "async-api",
+    "web-app-api"
+]
+service-embedded = [
+    "content-embedded",
+    "localization-embedded",
+    "error-embedded",
+    "session-embedded",
+    "storage-embedded",
+    "async-embedded",
+]
+web-apps = [
+    "web-app-base64",
+    "web-app-jolt",
+    "web-app-mocks",
+    "web-app-bytes2png",
+    "web-app-settings"
+]
+
+[plugins]
+spring-framework-boot = { id = "org.springframework.boot", version.ref = "spring-framework" }
+spring-dependency-managment = { id = "io.spring.dependency-management", version.ref = "spring-dependency-managment" }

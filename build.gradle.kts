@@ -5,8 +5,8 @@ plugins {
     id("java")
     id("jacoco")
     id("application")
-    id("org.springframework.boot") version "3.3.3"
-    id("io.spring.dependency-management") version "1.1.6"
+    alias(libs.plugins.spring.framework.boot)
+    alias(libs.plugins.spring.dependency.managment)
 }
 
 val versionFromProperty = "${project.property("version")}"
@@ -54,27 +54,10 @@ dependencies {
     implementation("jakarta.annotation:jakarta.annotation-api")
     implementation("jakarta.persistence:jakarta.persistence-api")
 
-    implementation("com.github.sibdevtools:api-common:${project.property("lib_api_common_version")}")
-    implementation("com.github.sibdevtools:api-content:${project.property("lib_api_content_version")}")
-    implementation("com.github.sibdevtools:api-error:${project.property("lib_api_error_version")}")
-    implementation("com.github.sibdevtools:api-localization:${project.property("lib_api_localization_version")}")
-    implementation("com.github.sibdevtools:api-session:${project.property("lib_api_session_version")}")
-    implementation("com.github.sibdevtools:api-storage:${project.property("lib_api_storage_version")}")
-    implementation("com.github.sibdevtools:api-async:${project.property("lib_api_async_version")}")
-    implementation("com.github.sibdevtools:api-web-app:${project.property("lib_api_web_app_version")}")
+    implementation(libs.bundles.service.api)
+    implementation(libs.bundles.service.embedded)
 
-    implementation("com.github.sibdevtools:service-content-embedded:${project.property("lib_embedded_content_version")}")
-    implementation("com.github.sibdevtools:service-error-embedded:${project.property("lib_embedded_error_version")}")
-    implementation("com.github.sibdevtools:service-localization-embedded:${project.property("lib_embedded_localization_version")}")
-    implementation("com.github.sibdevtools:service-session-embedded:${project.property("lib_embedded_session_version")}")
-    implementation("com.github.sibdevtools:service-storage-embedded:${project.property("lib_embedded_storage_version")}")
-    implementation("com.github.sibdevtools:service-async-embedded:${project.property("lib_embedded_async_version")}")
-
-    implementation("com.github.sibdevtools.web.app:web-app-base64:${project.property("lib_web_app_base64_version")}")
-    implementation("com.github.sibdevtools.web.app:web-app-jolt:${project.property("lib_web_app_jolt_version")}")
-    implementation("com.github.sibdevtools.web.app:web-app-mocks:${project.property("lib_web_app_mocks_version")}")
-    implementation("com.github.sibdevtools.web.app:web-app-bytes2png:${project.property("lib_web_app_bytes2png_version")}")
-    implementation("com.github.sibdevtools.web.app:web-app-settings:${project.property("lib_web_app_settings_version")}")
+    implementation(libs.bundles.web.apps)
 
     testImplementation("org.springframework.boot:spring-boot-starter-test")
 
