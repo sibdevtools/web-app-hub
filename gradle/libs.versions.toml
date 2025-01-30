@@ -22,7 +22,7 @@ storage-api = "0.0.13"
 storage-embedded = "0.1.16"
 
 async-api = "0.0.6"
-async-embedded = "0.0.9"
+async-embedded = "0.0.10"
 
 web-app-api = "0.0.6"
 
