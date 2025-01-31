@@ -1,6 +1,6 @@
 [versions]
-spring-framework = "3.3.3"
-spring-dependency-managment = "1.1.6"
+spring-framework = "3.4.1"
+spring-dependency-managment = "1.1.7"
 
 
 # service APIs deps
