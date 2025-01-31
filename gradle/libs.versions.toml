@@ -32,6 +32,7 @@ web-app-jolt = "0.0.10"
 web-app-mocks = "0.0.18"
 web-app-bytes2png = "0.0.3"
 web-app-settings = "0.0.2"
+web-app-json = "0.0.2"
 
 [libraries]
 common-api = { module = "com.github.sibdevtools:api-common", version.ref = "common-api" }
@@ -61,6 +62,7 @@ web-app-jolt = { module = "com.github.sibdevtools.web.app:web-app-jolt", version
 web-app-mocks = { module = "com.github.sibdevtools.web.app:web-app-mocks", version.ref = "web-app-mocks" }
 web-app-bytes2png = { module = "com.github.sibdevtools.web.app:web-app-bytes2png", version.ref = "web-app-bytes2png" }
 web-app-settings = { module = "com.github.sibdevtools.web.app:web-app-settings", version.ref = "web-app-settings" }
+web-app-json = { module = "com.github.sibdevtools.web.app:web-app-json", version.ref = "web-app-json" }
 
 [bundles]
 service-api = [
@@ -86,7 +88,8 @@ web-apps = [
     "web-app-jolt",
     "web-app-mocks",
     "web-app-bytes2png",
-    "web-app-settings"
+    "web-app-settings",
+    "web-app-json"
 ]
 
 [plugins]
