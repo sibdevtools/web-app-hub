@@ -33,6 +33,9 @@ web-app-mocks = "0.0.18"
 web-app-bytes2png = "0.0.3"
 web-app-settings = "0.0.2"
 web-app-json = "0.0.2"
+web-app-kafka = "0.0.1"
+
+serivce-kafka-client = "0.0.7"
 
 [libraries]
 common-api = { module = "com.github.sibdevtools:api-common", version.ref = "common-api" }
@@ -63,6 +66,9 @@ web-app-mocks = { module = "com.github.sibdevtools.web.app:web-app-mocks", versi
 web-app-bytes2png = { module = "com.github.sibdevtools.web.app:web-app-bytes2png", version.ref = "web-app-bytes2png" }
 web-app-settings = { module = "com.github.sibdevtools.web.app:web-app-settings", version.ref = "web-app-settings" }
 web-app-json = { module = "com.github.sibdevtools.web.app:web-app-json", version.ref = "web-app-json" }
+web-app-kafka = { module = "com.github.sibdevtools.web.app:web-app-kafka", version.ref = "web-app-kafka" }
+
+service-kafka-client = { module = "com.github.sibdevtools:service-kafka-client", version.ref = "serivce-kafka-client" }
 
 [bundles]
 service-api = [
@@ -82,6 +88,7 @@ service-embedded = [
     "session-embedded",
     "storage-embedded",
     "async-embedded",
+    "service-kafka-client"
 ]
 web-apps = [
     "web-app-base64",
@@ -89,7 +96,8 @@ web-apps = [
     "web-app-mocks",
     "web-app-bytes2png",
     "web-app-settings",
-    "web-app-json"
+    "web-app-json",
+    "web-app-kafka"
 ]
 
 [plugins]
