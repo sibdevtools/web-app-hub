@@ -1,4 +1,3 @@
-version: '3.5'
 services:
   web-app-hub:
     image: sibmaks/web-app-hub:latest
@@ -34,5 +33,5 @@ services:
 
       JAVA_OPTS: -Xmx1024m
     volumes:
-      - db:/home/docuser/db
-      - data:/home/docuser/data
+      - ./db:/home/docuser/db
+      - ./data:/home/docuser/data
