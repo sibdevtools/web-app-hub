@@ -1,7 +1,7 @@
 version: '3.5'
 services:
   web-app-hub:
-    image: 0.0.16:latest
+    image: sibmaks/web-app-hub:latest
     container_name: web-app-hub
     restart: always
     ports:
@@ -32,7 +32,7 @@ services:
       web.app.mocks.props.clean-up.obsolete.cron: '*/10 * * * * *'
       # -------------------------- App properties -----------------------------
 
-      JAVA_OPTS: -Xmx512m
+      JAVA_OPTS: -Xmx1024m
     volumes:
-      - ../db:/home/docuser/db
-      - ../data:/home/docuser/data
+      - db:/home/docuser/db
+      - data:/home/docuser/data
