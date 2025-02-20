@@ -40,3 +40,11 @@ java -jar web-app-hub-*.jar
 ```shell
 ./bin/web-app-hub
 ```
+
+### Docker
+
+Start latest with default configuration:
+
+```shell
+docker compose -f ../docker/docker-compose-local.yaml up -d
+```
