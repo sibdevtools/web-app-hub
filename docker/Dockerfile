@@ -1,11 +1,20 @@
-FROM openjdk:23-jdk
-LABEL maintainer=sibmaks; description="Project is Web Application Hub"
+FROM --platform=$BUILDPLATFORM openjdk:23-jdk AS builder
 
-RUN groupadd --gid 1000 docuser && useradd --uid 1000 --gid docuser --shell /bin/bash --create-home docuser
+WORKDIR /app
+
+COPY build/install/web-app-hub-boot /app/web-app-hub
+
+FROM openjdk:23-jdk
+
+LABEL maintainer="sibmaks" description="Project is Web Application Hub"
+
+RUN groupadd --gid 1000 docuser && \
+    useradd --uid 1000 --gid docuser --shell /bin/bash --create-home docuser
+
 USER docuser
 
 WORKDIR /home/docuser
 
-COPY build/install/web-app-hub-boot web-app-hub
+COPY --from=builder /app/web-app-hub /home/docuser/web-app-hub
 
 ENTRYPOINT ["./web-app-hub/bin/web-app-hub"]
