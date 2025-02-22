@@ -1,10 +1,10 @@
-FROM --platform=$BUILDPLATFORM openjdk:23-jdk AS builder
+FROM --platform=$BUILDPLATFORM ghcr.io/graalvm/jdk-community:23.0.2 AS builder
 
 WORKDIR /app
 
 COPY build/install/web-app-hub-boot /app/web-app-hub
 
-FROM openjdk:23-jdk
+FROM ghcr.io/graalvm/jdk-community:23.0.2
 
 LABEL maintainer="sibmaks" description="Project is Web Application Hub"
 
