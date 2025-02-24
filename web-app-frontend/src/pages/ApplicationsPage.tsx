@@ -1,16 +1,16 @@
 import React from 'react';
 import { useApplicationContext, WebApplicationType } from '../contexts/ApplicationContext';
 import { Loader } from '../components/Loader';
-import {
-  Alert,
-  Badge,
-  Card,
-  CardText,
-  Col,
-  Container,
-  Row
-} from 'react-bootstrap';
+import { Alert, Badge, Card, CardText, Col, Container, Row } from 'react-bootstrap';
 import { Variant } from 'react-bootstrap/types';
+
+function chunkArray<T>(array: T[], size: number): T[][] {
+  const result = [];
+  for (let i = 0; i < array.length; i += size) {
+    result.push(array.slice(i, i + size));
+  }
+  return result;
+}
 
 export const ApplicationsPage: React.FC = () => {
   const { configuration, loading, error } = useApplicationContext();
@@ -47,37 +47,56 @@ export const ApplicationsPage: React.FC = () => {
     return 'secondary'
   };
 
+  const chunked = chunkArray(sortedConfigs, 3)
+
   return (
-    <Container className="mt-4">
-      <Row>
-        {sortedConfigs.map(([key, value]) => (
-          <Col md={4} key={key}>
-            <Card className="mb-4">
-              <Card.Header>
-                <Card.Title>
-                  <Badge
-                    pill
-                    bg={getStyleForHealth(value.healthStatus)}
-                    className={`position-absolute top-0 start-100 translate-middle p-2 border`}>
-                    <span>{value.healthStatus}</span>
-                  </Badge>
-                  <a href={`/apps/${key}`}>
-                    {value.title || value.code}
-                  </a>
-                </Card.Title>
-              </Card.Header>
-              <Card.Body>
-                <CardText>{value.description}</CardText>
-              </Card.Body>
-              {value.version && (
-                <Card.Footer>
-                  <small className={'text-muted'}>Version: {value.version}</small>
-                </Card.Footer>
-              )}
-            </Card>
-          </Col>
-        ))}
-      </Row>
+    <Container className="mt-4 overflow-y-scroll">
+      {chunked.map(sub => (
+        <Row>
+          {sub.map(([key, value]) => (
+            <Col md={4} key={key}>
+              <Card className="mb-4">
+                <Card.Header>
+                  <Card.Title>
+                    <Row>
+                      <Col xs={8} sm={8} lg={9} xl={10}>
+                        <a href={`/apps/${key}`}>
+                          {value.title || value.code}
+                        </a>
+                      </Col>
+                      <Col xs={4} sm={4} lg={3} xl={2} className={'text-end'}>
+                        <small>
+                          <Badge
+                            pill
+                            bg={getStyleForHealth(value.healthStatus)}
+                          >
+                            <span>{value.healthStatus}</span>
+                          </Badge>
+                        </small>
+                      </Col>
+                    </Row>
+                  </Card.Title>
+                </Card.Header>
+                <Card.Body>
+                  <CardText>{value.description}</CardText>
+                </Card.Body>
+                {value.version && (
+                  <Card.Footer>
+                    <Row>
+                      <Col xs={6}>
+                        <small className={'text-muted'}>Version:</small>
+                      </Col>
+                      <Col xs={6} className={'text-end'}>
+                        <small className={'text-muted'}>{value.version}</small>
+                      </Col>
+                    </Row>
+                  </Card.Footer>
+                )}
+              </Card>
+            </Col>
+          ))}
+        </Row>
+      ))}
     </Container>
   );
 };
