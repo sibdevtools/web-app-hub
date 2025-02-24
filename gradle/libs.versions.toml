@@ -29,7 +29,7 @@ web-app-api = "0.0.6"
 # service web apps
 web-app-base64 = "0.0.11"
 web-app-jolt = "0.0.11"
-web-app-mocks = "0.0.20"
+web-app-mocks = "0.0.21"
 web-app-bytes2png = "0.0.3"
 web-app-settings = "0.0.2"
 web-app-json = "0.0.9"
