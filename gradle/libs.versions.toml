@@ -32,7 +32,7 @@ web-app-jolt = "0.0.11"
 web-app-mocks = "0.0.20"
 web-app-bytes2png = "0.0.3"
 web-app-settings = "0.0.2"
-web-app-json = "0.0.8"
+web-app-json = "0.0.9"
 web-app-kafka = "0.0.11"
 
 [libraries]
