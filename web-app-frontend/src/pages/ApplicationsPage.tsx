@@ -50,7 +50,7 @@ export const ApplicationsPage: React.FC = () => {
   const chunked = chunkArray(sortedConfigs, 3)
 
   return (
-    <Container className="mt-4 overflow-y-scroll">
+    <Container className="mt-4 overflow-y-auto">
       {chunked.map(sub => (
         <Row>
           {sub.map(([key, value]) => (
