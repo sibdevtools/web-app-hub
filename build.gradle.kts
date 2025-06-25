@@ -15,7 +15,7 @@ val versionFromEnv: String? = System.getenv("VERSION")
 version = versionFromEnv ?: versionFromProperty
 group = "${project.property("group")}"
 
-val targetJavaVersion = (project.property("jdk_version") as String).toInt()
+val targetJavaVersion = libs.versions.jdk.get().toInt()
 val javaVersion = JavaVersion.toVersion(targetJavaVersion)
 
 java {

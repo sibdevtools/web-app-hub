@@ -1,5 +1,7 @@
 [versions]
-spring-framework = "3.4.1"
+jdk = "21"
+
+spring-framework = "3.4.7"
 spring-dependency-managment = "1.1.7"
 
 
@@ -24,16 +26,19 @@ storage-embedded = "0.1.16"
 async-api = "0.0.6"
 async-embedded = "0.0.10"
 
+key-value-storage-api = "0.0.3"
+key-value-storage-embedded = "0.0.2"
+
 web-app-api = "0.0.6"
 
 # service web apps
 web-app-base64 = "0.0.11"
 web-app-jolt = "0.0.11"
-web-app-mocks = "0.0.22"
+web-app-mocks = "0.0.23"
 web-app-bytes2png = "0.0.4"
 web-app-settings = "0.0.3"
 web-app-json = "0.0.11"
-web-app-kafka = "0.0.12"
+web-app-kafka = "0.0.13"
 
 [libraries]
 common-api = { module = "com.github.sibdevtools:api-common", version.ref = "common-api" }
@@ -56,6 +61,9 @@ storage-embedded = { module = "com.github.sibdevtools:service-storage-embedded",
 async-api = { module = "com.github.sibdevtools:api-async", version.ref = "async-api" }
 async-embedded = { module = "com.github.sibdevtools:service-async-embedded", version.ref = "async-embedded" }
 
+key-value-storage-api = { module = "com.github.sibdevtools:api-key-value-storage", version.ref = "key-value-storage-api" }
+key-value-storage-embedded = { module = "com.github.sibdevtools:service-key-value-storage-embedded", version.ref = "key-value-storage-embedded" }
+
 web-app-api = { module = "com.github.sibdevtools:api-web-app", version.ref = "web-app-api" }
 
 web-app-base64 = { module = "com.github.sibdevtools.web.app:web-app-base64", version.ref = "web-app-base64" }
@@ -75,6 +83,7 @@ service-api = [
     "session-api",
     "storage-api",
     "async-api",
+    "key-value-storage-api",
     "web-app-api"
 ]
 service-embedded = [
@@ -83,7 +92,8 @@ service-embedded = [
     "error-embedded",
     "session-embedded",
     "storage-embedded",
-    "async-embedded"
+    "async-embedded",
+    "key-value-storage-embedded"
 ]
 web-apps = [
     "web-app-base64",
