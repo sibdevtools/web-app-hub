@@ -26,8 +26,8 @@ storage-embedded = "0.1.16"
 async-api = "0.0.6"
 async-embedded = "0.0.10"
 
-key-value-storage-api = "0.0.3"
-key-value-storage-embedded = "0.0.2"
+key-value-storage-api = "0.0.4"
+key-value-storage-embedded = "0.0.3"
 
 web-app-api = "0.0.6"
 
@@ -38,7 +38,7 @@ web-app-mocks = "0.0.24"
 web-app-bytes2png = "0.0.4"
 web-app-settings = "0.0.3"
 web-app-json = "0.0.12"
-web-app-kafka = "0.0.13"
+web-app-kafka = "0.0.14"
 
 [libraries]
 common-api = { module = "com.github.sibdevtools:api-common", version.ref = "common-api" }
