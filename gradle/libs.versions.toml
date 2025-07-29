@@ -27,7 +27,7 @@ async-api = "0.0.6"
 async-embedded = "0.0.10"
 
 key-value-storage-api = "0.0.4"
-key-value-storage-embedded = "0.0.3"
+key-value-storage-embedded = "0.0.4"
 
 web-app-api = "0.0.6"
 
@@ -39,6 +39,7 @@ web-app-bytes2png = "0.0.4"
 web-app-settings = "0.0.3"
 web-app-json = "0.0.12"
 web-app-kafka = "0.0.14"
+web-app-key-value-storage = "0.0.1"
 
 [libraries]
 common-api = { module = "com.github.sibdevtools:api-common", version.ref = "common-api" }
@@ -73,6 +74,7 @@ web-app-bytes2png = { module = "com.github.sibdevtools.web.app:web-app-bytes2png
 web-app-settings = { module = "com.github.sibdevtools.web.app:web-app-settings", version.ref = "web-app-settings" }
 web-app-json = { module = "com.github.sibdevtools.web.app:web-app-json", version.ref = "web-app-json" }
 web-app-kafka = { module = "com.github.sibdevtools.web.app:web-app-kafka", version.ref = "web-app-kafka" }
+web-app-key-value-storage = { module = "com.github.sibdevtools.web.app:web-app-key-value-storage", version.ref = "web-app-key-value-storage" }
 
 [bundles]
 service-api = [
@@ -102,7 +104,8 @@ web-apps = [
     "web-app-bytes2png",
     "web-app-settings",
     "web-app-json",
-    "web-app-kafka"
+    "web-app-kafka",
+    "web-app-key-value-storage"
 ]
 
 [plugins]
