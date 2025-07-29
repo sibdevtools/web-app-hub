@@ -29,7 +29,7 @@ const Sidebar = () => {
   return (
     <Nav
       variant="pills"
-      className="sidebar d-flex flex-column flex-shrink-0 p-3 text-bg-dark me-2"
+      className="sidebar d-flex flex-column flex-shrink-0 p-3 text-bg-dark"
     >
       <SidebarNavItem href="/" icon={Home01Icon} />
       <hr />
