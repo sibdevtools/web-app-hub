@@ -15,5 +15,6 @@ import java.util.Map;
 @NoArgsConstructor
 @AllArgsConstructor
 public class GetConfigurationsPLRs {
+    private String version;
     private Map<String, WebApplicationPLDto> configs;
 }

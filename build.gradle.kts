@@ -114,6 +114,12 @@ tasks.named("processResources") {
     dependsOn("copyFrontendResources")
 }
 
+tasks.withType<ProcessResources> {
+    filesMatching("**/application.properties") {
+        expand("appVersion" to version)
+    }
+}
+
 tasks.jar {
     dependsOn("copyFrontendResources")
     from("LICENSE") {

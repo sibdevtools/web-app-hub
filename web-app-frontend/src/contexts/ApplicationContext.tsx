@@ -12,6 +12,7 @@ export type WebApplicationType = {
 };
 
 type GetConfigurationRsType = {
+  version: string;
   configs: {
     [key: string]: WebApplicationType;
   };

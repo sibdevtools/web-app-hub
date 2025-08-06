@@ -3,6 +3,7 @@ import './sidebar.css';
 import { Home01Icon, Settings01Icon } from 'hugeicons-react';
 import { Nav, NavItem, NavLink } from 'react-bootstrap';
 import { useLocation } from 'react-router-dom';
+import { useApplicationContext } from '../../contexts/ApplicationContext';
 
 interface SidebarNavItemProps {
   href: string;
@@ -26,6 +27,8 @@ const SidebarNavItem: React.FC<SidebarNavItemProps> = ({ href, icon: Icon }) => 
 };
 
 const Sidebar = () => {
+  const { configuration } = useApplicationContext();
+
   return (
     <Nav
       variant="pills"
@@ -34,6 +37,10 @@ const Sidebar = () => {
       <SidebarNavItem href="/" icon={Home01Icon} />
       <hr />
       <SidebarNavItem href="/apps/web.app.settings" icon={Settings01Icon} />
+      <div className="mt-auto">
+        <hr />
+        <small>Version: {configuration?.version}</small>
+      </div>
     </Nav>
   );
 };

@@ -12,6 +12,7 @@ import com.github.sibdevtools.localization.api.rq.LocalizeRq;
 import com.github.sibdevtools.localization.api.service.LocalizationService;
 import com.github.sibdevtools.webapp.api.rq.SearchByTagsRq;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -32,6 +33,8 @@ import java.util.stream.Collectors;
 public class WebApplicationController {
     private final WebApplicationServiceImpl webApplicationService;
     private final LocalizationService localizationService;
+    @Value("${web.app.hub.version}")
+    private String version;
 
     @GetMapping("v1/configuration/")
     public GetConfigurationsPLRs getConfigurations() {
@@ -55,6 +58,7 @@ public class WebApplicationController {
                 );
 
         return GetConfigurationsPLRs.builder()
+                .version(version)
                 .configs(configMap)
                 .build();
     }
