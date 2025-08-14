@@ -39,7 +39,7 @@ web-app-bytes2png = "0.0.4"
 web-app-settings = "0.0.3"
 web-app-json = "0.0.14"
 web-app-kafka = "0.0.15"
-web-app-key-value-storage = "0.0.1"
+web-app-key-value-storage = "0.0.2"
 
 [libraries]
 common-api = { module = "com.github.sibdevtools:api-common", version.ref = "common-api" }
