@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { useApplicationContext } from '../contexts/ApplicationContext';
-import { Loader } from '../components/Loader';
 import { Alert } from 'react-bootstrap';
+import { Loader } from '@sibdevtools/frontend-common';
 
 export const ApplicationPage: React.FC = () => {
   const { configuration, loading, error } = useApplicationContext();
@@ -47,7 +47,7 @@ export const ApplicationPage: React.FC = () => {
         return;
       }
 
-      const observer = new MutationObserver(function (mutationsList) {
+      const observer = new MutationObserver(function () {
         const documentURI = iframeDocument.documentURI;
         const parts = documentURI.split(iframePrefix)
         if (parts.length !== 2) {
@@ -77,7 +77,7 @@ export const ApplicationPage: React.FC = () => {
   }, [iframeSrc, appPrefix]);
 
   if (loading) {
-    return <Loader />;
+    return <Loader loading={loading} />;
   }
 
   if (error) {

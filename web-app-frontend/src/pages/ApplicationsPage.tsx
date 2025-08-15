@@ -1,8 +1,8 @@
 import React from 'react';
 import { useApplicationContext, WebApplicationType } from '../contexts/ApplicationContext';
-import { Loader } from '../components/Loader';
 import { Alert, Badge, Card, CardText, Col, Container, Row } from 'react-bootstrap';
 import { Variant } from 'react-bootstrap/types';
+import { Loader } from '@sibdevtools/frontend-common';
 
 function chunkArray<T>(array: T[], size: number): T[][] {
   const result = [];
@@ -16,7 +16,7 @@ export const ApplicationsPage: React.FC = () => {
   const { configuration, loading, error } = useApplicationContext();
 
   if (loading) {
-    return <Loader />;
+    return <Loader loading={loading} />;
   }
 
   if (error) {
