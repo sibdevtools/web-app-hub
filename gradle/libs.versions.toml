@@ -38,7 +38,7 @@ web-app-mocks = "0.0.26"
 web-app-bytes2png = "0.0.4"
 web-app-settings = "0.0.3"
 web-app-json = "0.0.15"
-web-app-kafka = "0.0.16"
+web-app-kafka = "0.0.17"
 web-app-key-value-storage = "0.0.2"
 
 [libraries]
